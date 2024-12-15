@@ -1,0 +1,3 @@
+[submodule "Embedded/lib/ServoMotor"]
+	path = Embedded/lib/ServoMotor
+	url = https://github.com/JamahaW/Servo-Motor-Lib

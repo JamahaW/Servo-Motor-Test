@@ -1,10 +1,9 @@
 #include <Arduino.h>
+#include "servomotor/ServoMotor.hpp"
 
 
 void setup() {
-// write your initialization code here
 }
 
 void loop() {
-// write your code here
 }
