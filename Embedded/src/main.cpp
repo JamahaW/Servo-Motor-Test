@@ -5,9 +5,33 @@
 #include <Arduino.h>
 
 
-auto driver = servomotor::drivers::MockDriver();
+using servomotor::core::PIDSettings;
+using servomotor::core::PID;
+using servomotor::Position;
+using servomotor::Speed;
 
-auto encoder = servomotor::encoders::MockEncoder();
+auto settings = PIDSettings<Position, Speed>{
+    .kp = 1.0,
+    .ki = 1.0,
+    .kd = 1.0,
+    .input_range = {
+        .min = -100,
+        .max = 100
+    },
+    .output_range = {
+        .min = -10,
+        .max = 10
+    },
+    .integral_range = {
+        .min = -5,
+        .max = 5
+    }
+};
+
+auto pid = PID<Position, Speed>(settings);
+
+//auto driver = servomotor::drivers::MockDriver();
+//auto encoder = servomotor::encoders::MockEncoder();
 
 void setup() {
     Serial.begin(115200);
@@ -15,10 +39,5 @@ void setup() {
 
 
 void loop() {
-    encoder.current_position += 80;
-    delay(10);
 
-//    static servomotor::core::Chronometer chronometer;
-
-    Serial.println(encoder.getSpeed());
 }
