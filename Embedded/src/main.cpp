@@ -1,18 +1,21 @@
+#include "servomotor/drivers/MockDriver.hpp"
+#include "servomotor/encoders/MockEncoder.hpp"
+
 #include <Arduino.h>
-#include "servomotor/ServoMotor.hpp"
-#include "servomotor/MockServo.hpp"
 
 
-servomotor::Config<int32_t, int8_t> config = {
-    .speed_regulator_settings {1.0, 0.1, 0.5, 127},
-    .position_regulator_settings {1.0, 1.0, 1.0, 1000000},
-    .max_position_error = 5
-};
+auto driver = servomotor::drivers::MockDriver();
 
-servomotor::MockServoMotor m(config);
+auto encoder = servomotor::encoders::MockEncoder();
 
 void setup() {
+    Serial.begin(115200);
 }
 
+
 void loop() {
+    encoder.current_position += 10L;
+    delay(1);
+
+    Serial.println(encoder.getSpeed());
 }
