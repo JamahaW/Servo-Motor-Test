@@ -1,6 +1,7 @@
 #include "servomotor/drivers/MockDriver.hpp"
 #include "servomotor/encoders/MockEncoder.hpp"
 #include "servomotor/ServoMotor.hpp"
+#include "servomotor/drivers/L293Driver.hpp"
 
 #include <Arduino.h>
 
