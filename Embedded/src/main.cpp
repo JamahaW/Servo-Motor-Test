@@ -32,16 +32,10 @@ void MemIO_print(const MemIO &mem) {
 
 void setup() {
     Serial.begin(115200);
-    MemIO_print(stream.output);
 
-    for (uint8_t i = 0; i < 10; i++) {
-        stream.write(i);
-    }
+    serializer.write((int32_t) 0x12345678);
 
     MemIO_print(stream.output);
-
 }
 
-void loop() {
-
-}
+void loop() {}
