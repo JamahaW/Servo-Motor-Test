@@ -11,7 +11,7 @@ using servomotor::core::PID;
 using servomotor::Position;
 using servomotor::Speed;
 
-auto settings = PIDSettings<Position, Speed>{
+PIDSettings<Position, Speed> settings{
     .kp = 1.0,
     .ki = 1.0,
     .kd = 1.0,

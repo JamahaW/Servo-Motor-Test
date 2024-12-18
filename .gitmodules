@@ -1,3 +1,6 @@
-[submodule "Embedded/lib/ServoMotor"]
-	path = Embedded/lib/ServoMotor
+[submodule "Embedded/lib/Servo-Motor-Lib"]
+	path = Embedded/lib/Servo-Motor-Lib
 	url = https://github.com/JamahaW/Servo-Motor-Lib
+[submodule "Embedded/lib/Serial-Cmd-Lib"]
+	path = Embedded/lib/Serial-Cmd-Lib
+	url = https://github.com/JamahaW/Serial-Cmd-Lib
