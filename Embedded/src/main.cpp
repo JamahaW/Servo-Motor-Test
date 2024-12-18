@@ -1,43 +1,46 @@
-#include "servomotor/drivers/MockDriver.hpp"
-#include "servomotor/encoders/MockEncoder.hpp"
-#include "servomotor/ServoMotor.hpp"
-#include "servomotor/drivers/L293Driver.hpp"
+
+#include "serialcmd/test/MockStream.hpp"
+#include "serialcmd/StreamBinarySerializer.hpp"
 
 #include <Arduino.h>
 
 
-using servomotor::core::PIDSettings;
-using servomotor::core::PID;
-using servomotor::Position;
-using servomotor::Speed;
+uint8_t input_buffer[8], output_buffer[8];
 
-PIDSettings<Position, Speed> settings{
-    .kp = 1.0,
-    .ki = 1.0,
-    .kd = 1.0,
-    .input_range = {
-        .min = -100,
-        .max = 100
-    },
-    .output_range = {
-        .min = -10,
-        .max = 10
-    },
-    .integral_range = {
-        .min = -5,
-        .max = 5
+using serialcmd::core::MemIO;
+
+serialcmd::test::MockStream stream(
+    MemIO(input_buffer, sizeof(input_buffer)),
+    MemIO(output_buffer, sizeof(output_buffer))
+);
+
+serialcmd::StreamBinarySerializer serializer(stream);
+
+void MemIO_print(const MemIO &mem) {
+    for (uint8_t *i = const_cast<uint8_t *>(mem.begin); i < mem.end; i++) {
+        Serial.print((size_t) i);
+        Serial.write(':');
+        Serial.write('\t');
+        Serial.println(*i, HEX);
     }
-};
 
-auto pid = PID<Position, Speed>(settings);
-
-//auto driver = servomotor::drivers::MockDriver();
-//auto encoder = servomotor::encoders::MockEncoder();
+    Serial.print(F("Available:\t"));
+    Serial.println(mem.getAvailableSize());
+    Serial.print(F("Cursor:\t"));
+    Serial.println((size_t) mem.cursor);
+}
 
 void setup() {
     Serial.begin(115200);
-}
+    MemIO_print(stream.output);
 
+    for (uint8_t i = 0; i < 10; i++) {
+        stream.write(i);
+    }
+
+    MemIO_print(stream.output);
+
+}
 
 void loop() {
 
